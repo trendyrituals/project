@@ -1,0 +1,84 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <link href='{% static "css/style.css" %}' rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"> 
+
+
+  </head>
+  <body>
+  
+
+  <nav class="navbar navbar-expand-lg sticky-top navbar-light " style="background-color: #17A2B8;">
+  <div class="container">
+    <a class="navbar-brand" href="/teacher_desk/">The Peacemaker</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="/teacher_desk/search_job/"><i class="fa fa-search" aria-hidden="true"></i> Search Job</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/teacher_desk/bid_manager/"><i class="fa fa-life-ring" aria-hidden="true"></i> Bids Manager</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/logout_view"><i class="fa fa-upload" aria-hidden="true"></i> Upload Solution</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/logout_view"><i class="fa fa-user-secret" aria-hidden="true"></i> Profile</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/logout_view"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</a>
+        </li>
+        
+      </ul>
+      
+    </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+  
+    {% block content %}
+
+ 
+
+    {% endblock content %}
+
+
+  </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  </body>
+</html>

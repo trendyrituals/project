@@ -1,0 +1,16 @@
+certifi==2017.7.27.1
+chardet==3.0.4
+Django==1.10.5
+django-crispy-forms==1.6.1
+django-markdown==0.8.4
+django-multiurl==1.1.0
+django-paypal==0.2.5
+idna==2.6
+Markdown==2.6.8
+olefile==0.44
+Pillow==4.0.0
+pytz==2017.2
+requests==2.18.4
+six==1.11.0
+South==1.0.2
+urllib3==1.22

@@ -1,0 +1,78 @@
+{% extends "teacher/desk.html" %}
+
+{% block content %}
+
+<div class="row" style="margin-top: 20px;">
+	
+	<div class="col-sm-3">
+
+		<form class="navbar-form" method="GET" action="" role="search">
+	        <div class="form-group">
+	          <input class="form-control" name="q" placeholder="Search" type="text" value="{{ request.GET.q }}">
+	        </div>
+	        <input type="submit" name="">
+      	</form>
+
+      	<p style="margin-top: 20px;">Ability to create different types of marketing content - blogs, competitor comparisons etc. 5- Basic web design. Basic understanding of HTML and CSS 6- Proficiency in PPT and Word 7- Social media marketing. </p>
+	</div>
+
+
+
+
+
+<!--Job list here -->
+	<div class="col-sm-9">
+		
+	<div>
+
+		{% for obj in object_list %}
+
+
+
+			<div class="alert alert-info" role="alert">
+			  <h4><a class="alert-heading" href="/teacher_desk/view/{{ obj.id }}">{{ obj.job_title }}</a></h4>
+			  <p>Subject : {{ obj.subject }}</p>
+			  <p>{{ obj.description | truncatechars:300 }}</p>
+			  <div class="row">
+			  	<div class="col-sm-4">Due Date : {{ obj.due_date }}</div>
+			  	<div class="col-sm-4">Price : {{ obj.amt }}</div>
+			  	<div class="col-sm-4">Publish On : {{ obj.timestamp }}</div>
+			  </div>
+			  
+			</div>
+			
+
+		
+
+		{% endfor %}
+	</div>
+		
+
+
+	<div class="pagination">
+	    <span class="step-links">
+	        {% if object_list.has_previous %}
+	            <a href="?page={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">previous</a>
+	        {% endif %}
+
+	        <span class="current">
+	            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+	        </span>
+
+	        {% if object_list.has_next %}
+	            <a href="?page={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">next</a>
+	        {% endif %}
+	    </span>
+	</div>
+
+
+	</div>
+
+	
+
+</div><!--Job list here -->
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends "teacher/desk.html" %}
+
+{% block content %}
+
+<div class="alert alert-info" role="alert" style="margin-top: 20px;">
+	<div class="row">
+		<div class="col-sm-6"><h3>{{ instance.job_title }}</h3></div>
+		<div class="col-sm-6 navbar-right"><a class="btn btn-success" href="/teacher_desk/bid/{{ instance.id }}/{{ instance.user_id }}">Place Bid</a></div>
+
+	</div>
+  
+  <p>Subject : {{ instance.subject }}</p>
+  <p>Attachment : <a href="{{ instance.file.url }}">{{ instance.file }}</a></p>
+  <div class="row">
+  	<div class="col-sm-4">Due Date : {{ instance.due_date }}</div>
+  	<div class="col-sm-4">Price : {{ instance.amt }}$</div>
+  	<div class="col-sm-4">Publish On : {{ instance.timestamp }}</div>
+  </div>  
+  <p style="margin-top: 20px;">Description : {{ instance.description }}</p>
+
+
+</div>
+
+
+{% endblock content %}
