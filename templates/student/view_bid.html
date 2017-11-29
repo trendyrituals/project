@@ -1,0 +1,21 @@
+{% extends "student/desk.html" %}
+
+{% block content %}
+
+<div class="alert alert-info" style="margin-top: 40px;">
+<h1>Bid ID : {{ instance.id }}</h1>
+<p>Job ID : {{ instance.job_id }} <a href="/student_desk/view/{{ instance.job_id }}/">view</a></p>
+<p>Teacher ID : {{ instance.teacher_id }}</p>
+<p>Message : {{ instance.proposal }}</p>
+<p>Amount : <strong>{{ instance.total_amt }} $</strong></p>
+<hr>
+<p>{{ instance.description }}</p>
+<p>Placed On : {{ instance.timestamp }}</p>
+
+<div class="text-center">
+	<a class="btn btn-success" href="/student_desk/bid/accept/{{ instance.id }}">Accept</a> | <a class="btn btn-danger" href="/student_desk/bid/delete/{{ instance.id }}">Delete</a>
+</div>	
+</div>
+
+
+{% endblock content %}

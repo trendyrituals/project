@@ -92,9 +92,10 @@ class Bid_count(models.Model):
 ################################
 class Solution(models.Model):
 	job_id = models.CharField(max_length=10)
+	std_id = models.CharField(max_length=10)
 	bid_id = models.CharField(max_length=10)
-	file = models.FileField(blank=False)
-	status = models.CharField(max_length=1)
+	file = models.FileField(blank=False, null=True)
+	status = models.CharField(max_length=1, default=0)
 	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 
 

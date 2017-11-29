@@ -2,49 +2,58 @@
 
 {% block content %}
 
-{{ id }}
 
-{{ group }}
+<div class="row animated fadeInUp" style="margin-top: 20px;text-align: center;">
+  <div class="col-sm-4 alert alert-primary">{{ id }}</div>
+  <div class="col-sm-4 alert alert-success">{{ group }}</div>
+  <div class="col-sm-4 alert alert-info">{{ num }}</div>
+</div>  
 
-<div style="margin-top: 40px;">
-	<h3>Recent Assignments</h3><br>
-	<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Username</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-  </tbody>
-</table>
+<div class="row">
+
+	<div class="col-sm-6 alert alert-warning text-center">
+		<h1>Welcome</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat.</p>
+	</div>
+
+
+	<div class="col-sm-6">
+		<h3>New Bids</h3>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat.</p>
+		<table class="table table-striped table-responsive">
+		  <thead>
+		    <tr>
+		      <th scope="col">Bid ID</th>
+		      <th scope="col">Job ID</th>
+		      <th scope="col">Amount</th>
+		      <th scope="col">Options</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    {% for obj in object %}
+
+		    <tr>
+		      <td>{{ obj.id }}</td>
+		      <td>{{ obj.job_id }}</td>
+		      <td>{{ obj.amt }}</td>
+		      <td>
+		      	<a href="/teacher_desk/start_project/{{ obj.id }}/" class="btn btn-success btn-sm">Start Project</a>
+		      </td>
+		    </tr>
+
+		    {% endfor %}
+		  </tbody>
+		</table>
+	</div>
 </div>
+
+
 
 
 {% endblock content %}

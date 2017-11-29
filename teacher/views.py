@@ -8,7 +8,7 @@ from main.models import Job, Bid, Solution, Degree, Bid_count
 from django.contrib import messages
 
 
-from .forms import DegreeForm, BidForm
+from .forms import DegreeForm, BidForm, SolutionForm
 
 
 #######################################
@@ -24,9 +24,14 @@ def teacher_desk(request):
 				id = request.user.id
 				user = User.objects.get(username=request.user)
 				group = user.groups.get()
+				get_num = Bid_count.objects.get(user_id= request.user.id)
+				num = get_num.bid_num
+				new_bid = Bid.objects.filter(teacher_id = request.user.id, status=1)
 				context = {
 				"id": id,
 				"group": group,
+				"num": num,
+				"object": new_bid,
 				}
 				return render(request,"teacher/index.html", context)
 			else:
@@ -89,7 +94,7 @@ def search_job(request):
 					Q(description__icontains=query) |
 					Q(subject__icontains=query) |
 					Q(pk__icontains=query) 
-					).distinct().order_by('-id')
+					).distinct().exclude(status=1).order_by('-id')
 				paginator = Paginator(queryset_list, 5) # Show 25 contacts per page
 
 				page = request.GET.get('page')
@@ -103,12 +108,13 @@ def search_job(request):
 					queryset = paginator.page(paginator.num_pages)
 
 				context = {
-					"object_list":queryset
+					"object_list":queryset,
+					"flag": "active",
 				}
 				return render(request,"teacher/search_job.html", context)
 
 			#without search field query
-			query_list = Job.objects.filter().distinct().order_by('-id')
+			query_list = Job.objects.filter().distinct().exclude(status=1).order_by('-id')
 			paginator = Paginator(query_list, 5) # Show 25 contacts per page
 
 			page = request.GET.get('page')
@@ -209,11 +215,94 @@ def bid_manager(request):
 			
 			context = {
 				"title": "Bid manager",
+				"flag": "active",
 			}
 			return render(request,"teacher/bid_manager.html", context)
 
 
 
+# got payment and update bids table.
+def return_url_bid(request):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'teacher':
+			get_num = Bid_count.objects.get(user_id= request.user.id)
+			num = get_num.bid_num
+			up_num = int(num)+10
+			get_num.bid_num = str(up_num)
+			get_num.save() 
+			return render(request,"teacher/return_url.html")
+
+
+# cancel payment view here.
+def cancel_url_bid(request):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'teacher':
+			return render(request,"teacher/cancel_url.html")
+
+
+
+
+
+
+
+#######################################
+#upload solution 
+#######################################
+def upload_solution(request,id=None):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'teacher':
+			obj = Bid.objects.filter(teacher_id=request.user.id, status=2).order_by('-id')
+			context = {
+				"object":obj,
+			}
+			return render(request,"teacher/upload_solution.html", context)
+
+
+
+def upload_sol(request,id=None,job=None,std=None):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'teacher':
+			form = SolutionForm(request.POST or None, request.FILES or None)
+			if form.is_valid():
+				solution = form.save(commit=False)
+				solution.job_id = job
+				solution.std_id = std
+				solution.bid_id = id
+				solution.save()
+				txt = "New solution uploaded successfully."
+				messages.success (request, txt, extra_tags= 'text-success')
+			context = {
+				"form": form,
+			}
+			return render(request,"teacher/upload_solution_form.html", context)
+
+
+
+
+
+
+#######################################
+#start project for new bid and change status to under process "2"
+#######################################
+def start_project(request,id=None):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'teacher':
+			instance = get_object_or_404(Bid, id=id)
+			instance.status = 2
+			instance.save()
+			txt = "Successfully start a project now you can upload solution for the bid."
+			messages.success (request, txt, extra_tags= 'text-success')
+			return redirect("/teacher_desk/")
 
 
 

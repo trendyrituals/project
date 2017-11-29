@@ -12,13 +12,14 @@
     <link href='{% static "css/style.css" %}' rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet"> 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" rel="stylesheet"> 
 
 
   </head>
   <body>
   
 
-  <nav class="navbar navbar-expand-lg sticky-top navbar-light " style="background-color: #17A2B8;">
+  <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-info" >
   <div class="container">
     <a class="navbar-brand" href="/teacher_desk/">The Peacemaker</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,11 +38,11 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="/logout_view"><i class="fa fa-upload" aria-hidden="true"></i> Upload Solution</a>
+          <a class="nav-link" href="/teacher_desk/upload_solution/"><i class="fa fa-upload" aria-hidden="true"></i> Upload Solution</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="/logout_view"><i class="fa fa-user-secret" aria-hidden="true"></i> Profile</a>
+          <a class="nav-link" href="#"><i class="fa fa-user-secret" aria-hidden="true"></i> Profile</a>
         </li>
         
         <li class="nav-item">
@@ -63,6 +64,8 @@
         {% endfor %}
     </ul>
     {% endif %}
+
+
 
 
   

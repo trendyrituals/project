@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth import(authenticate, get_user_model, login, logout,)
 from django.contrib.auth.models import User, Group
-from main.models import Job
+from main.models import Job, Bid, Solution
 from django.contrib import messages
 
 
@@ -21,9 +21,11 @@ def student_desk(request):
 			id = request.user.id
 			user = User.objects.get(username=request.user)
 			group = user.groups.get()
+			new_bid = Bid.objects.filter(std_id = request.user.id, status=0)
 			context = {
 			"id": id,
 			"group": group,
+			"bids": new_bid,
 			}
 			return render(request,"student/index.html", context)
 		
@@ -77,6 +79,62 @@ def active_job(request):
 
 
 #######################################
+#view bid
+#######################################
+def view_bid(request,id=None):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'student':
+			instance = get_object_or_404(Bid, id=id)
+			context = {
+				"instance": instance,
+			}
+			return render(request,"student/view_bid.html", context)
+
+
+
+
+
+
+#######################################
+#accept bid
+#######################################
+def accept_bid(request,id=None):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'student':
+			get_status = Bid.objects.get(id=id)
+			get_status.status = 1
+			job_id = get_status.job_id
+			get_status.save()
+			instance = get_object_or_404(Job, id=job_id)
+			instance.status = 1
+			instance.save()
+			return redirect("/student_desk/")
+
+
+
+
+
+
+#######################################
+#delete bid
+#######################################
+def delete_bid(request,id=None):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'student':
+			instance = get_object_or_404(Bid, id=id)
+			instance.delete()
+			return redirect("/student_desk/")
+
+
+
+
+#######################################
 #view job posts
 #######################################
 def view_job(request,id=None):
@@ -109,6 +167,93 @@ def delete_job(request,id=None):
 			return redirect("/student_desk/active_job/")
 
 
+
+
+
+
+
+
+#######################################
+#get solution
+#######################################
+def get_solution(request):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'student':
+			solution = Solution.objects.filter(std_id= request.user.id, status=0).order_by("-id")
+			context = {
+				"object" : solution,
+				"title" : "Solutions",
+			}
+			return render(request,"student/solution_list.html", context)
+
+
+
+
+
+#######################################
+#payment page solution
+#######################################
+def payment(request, id=None):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'student':
+			amt = Bid.objects.get(id=id)
+			price = amt.total_amt
+			request.session['bid']= id
+			#print request.session['bid']
+			context = {
+				"price" : price
+			}
+			return render(request,"student/payment.html", context)
+
+
+
+
+#######################################
+#success payment page
+#######################################
+def success_payment(request):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'student':
+			solution = get_object_or_404(Solution, bid_id=request.session['bid'])
+			file = solution.file
+			solution.status = 1
+			solution.save()
+			bid = get_object_or_404(Bid, id=request.session['bid'])
+			job_id = bid.job_id
+			bid.status = 3
+			bid.save()
+			close_job = get_object_or_404(Job, id=job_id)
+			close_job.status = 2
+			close_job.save()
+			del request.session['bid']
+			context = {
+				"file" : file
+			}
+			return render(request,"student/success_payment.html", context)
+
+
+
+
+
+#######################################
+#cancel payment page
+#######################################
+def cancel_payment(request):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'student':
+			del request.session['bid']
+			context = {
+				"session" : request.session['bid']
+			}
+			return render(request,"student/cancel_payment.html", context)
 
 
 
