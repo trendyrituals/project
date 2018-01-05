@@ -4,9 +4,11 @@ from django.contrib.auth import(authenticate, get_user_model, login, logout,)
 from django.contrib.auth.models import User, Group
 from main.models import Job, Bid, Solution
 from django.contrib import messages
+from django.conf import settings
+from django.core.mail import send_mail
 
 
-from .forms import JobForm
+from .forms import JobForm, ReviewForm
 
 
 
@@ -96,29 +98,6 @@ def view_bid(request,id=None):
 
 
 
-
-#######################################
-#accept bid
-#######################################
-def accept_bid(request,id=None):
-	if request.user.is_authenticated():
-		user = User.objects.get(username=request.user)
-		group = user.groups.get()
-		if group.name == 'student':
-			get_status = Bid.objects.get(id=id)
-			get_status.status = 1
-			job_id = get_status.job_id
-			get_status.save()
-			instance = get_object_or_404(Job, id=job_id)
-			instance.status = 1
-			instance.save()
-			return redirect("/student_desk/")
-
-
-
-
-
-
 #######################################
 #delete bid
 #######################################
@@ -190,6 +169,36 @@ def get_solution(request):
 
 
 
+#######################################
+#down load solution and give review
+#######################################
+def download_solution(request,id):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'student':
+			form = ReviewForm(request.POST or None)
+			solution = Solution.objects.get(bid_id= id, status=0)
+			file = solution.file
+			if form.is_valid():
+				bid = Bid.objects.get(id=id)
+				job_id = bid.job_id
+				#submit review and close bid
+				bid.review = form.cleaned_data['review']
+				bid.status = 3
+				bid.save()
+				#close project or job 
+				get_job = Job.objects.get(id=job_id)
+				get_job.status = 2
+				get_job.save()
+				return redirect("/student_desk/get_solution/")
+			context = {
+			"file" : file,
+			"form" : form,
+			}
+			return render(request,"student/download_solution.html", context)
+
+
 
 
 #######################################
@@ -220,20 +229,47 @@ def success_payment(request):
 		user = User.objects.get(username=request.user)
 		group = user.groups.get()
 		if group.name == 'student':
-			solution = get_object_or_404(Solution, bid_id=request.session['bid'])
-			file = solution.file
-			solution.status = 1
-			solution.save()
+			#Bid accept flag update
 			bid = get_object_or_404(Bid, id=request.session['bid'])
 			job_id = bid.job_id
-			bid.status = 3
+			teacher_id = bid.teacher_id
+			bid.status = 1
 			bid.save()
+			#get teacher eamil id
+			get_user = User.objects.get(id=teacher_id)
+			teacher_email = get_user.email
+			#Close the project from available for bid project list
 			close_job = get_object_or_404(Job, id=job_id)
-			close_job.status = 2
+			close_job.status = 1
 			close_job.save()
+			bid_info = str(request.session['bid'])
+			#send mail to student
+			mail_sub = 'subject here'
+			mail_message = 'payment received for bid number :' + bid_info
+			sender = settings.EMAIL_HOST_USER
+			to_user = [request.user.email]
+			send_mail(
+			    mail_sub,
+			    mail_message,
+			    sender,
+			    to_user,
+			    fail_silently=False,
+			)
+			#send mail to teacher
+			mail_sub = 'subject here'
+			mail_message = 'Bid accepted and the bid number is :' + bid_info
+			sender = settings.EMAIL_HOST_USER
+			to_user = [teacher_email]
+			send_mail(
+			    mail_sub,
+			    mail_message,
+			    sender,
+			    to_user,
+			    fail_silently=False,
+			)
 			del request.session['bid']
 			context = {
-				"file" : file
+				"text" : bid_info
 			}
 			return render(request,"student/success_payment.html", context)
 
@@ -251,7 +287,7 @@ def cancel_payment(request):
 		if group.name == 'student':
 			del request.session['bid']
 			context = {
-				"session" : request.session['bid']
+				"session" : "request.session['bid']"
 			}
 			return render(request,"student/cancel_payment.html", context)
 

@@ -6,6 +6,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User, Group
 from main.models import Job, Bid, Solution, Degree, Bid_count
 from django.contrib import messages
+from django.conf import settings
+from django.core.mail import send_mail
 
 
 from .forms import DegreeForm, BidForm, SolutionForm
@@ -94,7 +96,7 @@ def search_job(request):
 					Q(description__icontains=query) |
 					Q(subject__icontains=query) |
 					Q(pk__icontains=query) 
-					).distinct().exclude(status=1).order_by('-id')
+					,status=0).distinct().order_by('-id')
 				paginator = Paginator(queryset_list, 5) # Show 25 contacts per page
 
 				page = request.GET.get('page')
@@ -114,7 +116,7 @@ def search_job(request):
 				return render(request,"teacher/search_job.html", context)
 
 			#without search field query
-			query_list = Job.objects.filter().distinct().exclude(status=1).order_by('-id')
+			query_list = Job.objects.filter(status=0).distinct().order_by('-id')
 			paginator = Paginator(query_list, 5) # Show 25 contacts per page
 
 			page = request.GET.get('page')
@@ -187,6 +189,21 @@ def bid(request,id=None,std=None):
 					total_add = float(new_bid.amt)+add_tax
 					new_bid.total_amt = total_add
 					new_bid.save()
+
+					#send mail to teacher
+					get_student = User.objects.get(id=std)
+					std_email = get_student.email
+					mail_sub = 'subject here'
+					mail_message = 'Bid placed for job id : '+ id
+					sender = settings.EMAIL_HOST_USER
+					to_user = [std_email]
+					send_mail(
+					    mail_sub,
+					    mail_message,
+					    sender,
+					    to_user,
+					    fail_silently=False,
+					)
 
 					txt = "New bid added successfully."
 					messages.success (request, txt, extra_tags= 'text-success')
@@ -277,6 +294,20 @@ def upload_sol(request,id=None,job=None,std=None):
 				solution.std_id = std
 				solution.bid_id = id
 				solution.save()
+				#send mail to teacher
+				get_student = User.objects.get(id=std)
+				std_email = get_student.email
+				mail_sub = 'subject here'
+				mail_message = 'Solution uploaded by teacher for Job ID : '+ job + ' and Bid id is : ' + id
+				sender = settings.EMAIL_HOST_USER
+				to_user = [std_email]
+				send_mail(
+				    mail_sub,
+				    mail_message,
+				    sender,
+				    to_user,
+				    fail_silently=False,
+				)
 				txt = "New solution uploaded successfully."
 				messages.success (request, txt, extra_tags= 'text-success')
 			context = {

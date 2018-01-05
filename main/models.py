@@ -55,6 +55,7 @@ class Bid(models.Model):
 	amt = models.CharField(max_length=4, blank=False)
 	total_amt = models.CharField(max_length=4, blank=False)
 	status = models.CharField(max_length=1, default=0)
+	review = models.CharField(max_length=25, blank=True)
 	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 	
 

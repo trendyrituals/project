@@ -33,9 +33,9 @@ class DegreeAdmin(admin.ModelAdmin):
 #Bid model here.
 ################################
 class BidAdmin(admin.ModelAdmin):
-	list_display = ["__unicode__","job_id"]
-	list_filter = ["job_id"]
-	search_fields = ["job_id"]
+	list_display = ["job_id","id"]
+	list_filter = ["job_id","id"]
+	search_fields = ["job_id","id"]
 	class Meta:
 		model = Bid
 		
