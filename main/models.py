@@ -12,7 +12,7 @@ class Job(models.Model):
 	job_title = models.CharField(max_length=120)
 	subject = models.CharField(max_length=120)
 	due_date = models.DateField(blank=False, null=True)
-	file = models.FileField(blank=True, null=True)
+	file = models.FileField(blank=False, null=True)
 	description = models.TextField(blank=False)
 	amt = models.CharField(max_length=4, blank=False)
 	status = models.CharField(max_length=1, default=0)
