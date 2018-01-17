@@ -1,0 +1,36 @@
+{% extends "student/desk.html" %}
+
+{% block section %}section-profile{% endblock %}
+
+
+
+{% block content %}
+<div class="container bg-light" style="padding-top: 20px;padding-bottom: 20px;margin-top: 20px;">
+
+	<div class="text-center row" style="margin-top: 20px;">
+		<div class="col-md-6">
+			<div class="text-center">
+			  <img src="{{ instance.profile_picture.url }}" alt="..." class="img-thumbnail">
+			</div>
+		</div>
+		<div class="col-md-6" style="padding-top: 40px;"><h3>{{ request.user }}</h3><p>{{ request.user.email }}<br>{{ instance.mobile }}</p></div>
+	</div>
+	<hr>
+
+	<div class="text-center row">
+		<div class="col-md-6"></div>
+		<div class="col-md-6"><a class=" btn btn-info" href="/student_desk/update_profile/{{ instance.std_id }}">Update Profile</a></div>
+	</div>
+
+
+
+	<div class="text-center" style="margin-top: 20px;">
+		<p><b>About : </b> {{ instance.about }}</p>
+	</div>
+
+</div>
+
+
+
+
+{% endblock content %}

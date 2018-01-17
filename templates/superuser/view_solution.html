@@ -1,0 +1,60 @@
+{% extends "superuser/desk.html" %}
+
+
+{% block section %}section-solution{% endblock %}
+
+
+{% block content %}
+<div class="alert" style="margin-top: 40px;">
+
+<!-- Solution File -->
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+	<p>Solution : <a target="_blank" href="{{ solution.file.url }}">{{ solution.file }}</a></p>
+
+
+
+<div class="row">
+<!-- Job Information -->
+	<div class="col-md-8 alert bg-light">
+		<h3>Project Info</h3><hr>
+
+			<h3>{{ job.job_title }}</h3>
+			
+			  
+	  <p>Subject : {{ job.subject }}</p>
+	  <p>Attachment : <a target="_blank" href="{{ job.file.url }}">{{ job.file }}</a></p>
+	  <div class="row">
+	  	<div class="col-sm-4">Due Date : {{ job.due_date }}</div>
+	  	<div class="col-sm-4">Price : {{ job.amt }}$</div>
+	  	<div class="col-sm-4">Publish On : {{ job.timestamp }}</div>
+	  </div>  
+	  <p style="margin-top: 20px;">Description : {{ job.description }}</p>
+
+
+	</div>
+
+
+<!-- Bid Information -->
+	<div class="col-md-4 alert bg-light">
+		<h3>Bid Info</h3><hr>
+		<p>Bid ID : {{ bid.id }}</p>
+		<p>Job ID : {{ bid.job_id }} </p>
+		<p>Teacher ID : {{ bid.teacher_id }}</p>
+		<p>Message : {{ bid.proposal }}</p>
+		<p>Amount : <strong>{{ bid.amt }} $</strong></p>
+		<p>Total Amount : <strong>{{ bid.total_amt }} $</strong></p>
+		<hr>
+		<p>{{ bid.description }}</p>
+		<p>Placed On : {{ bid.timestamp }}</p>
+	</div>
+
+</div>
+</div>
+
+{% endblock content %}

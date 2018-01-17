@@ -9,6 +9,7 @@
   <div class="col-sm-4 alert alert-info">{{ num }}</div>
 </div>  
 
+
 <div class="row">
 
 	<div class="col-sm-6 alert alert-warning text-center">
@@ -21,7 +22,7 @@
 
 
 	<div class="col-sm-6">
-		<h3>New Bids</h3>
+		<h3>Accepted Bids</h3>
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -32,7 +33,7 @@
 		      <th scope="col">Bid ID</th>
 		      <th scope="col">Job ID</th>
 		      <th scope="col">Amount</th>
-		      <th scope="col">Options</th>
+		      
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -42,9 +43,7 @@
 		      <td>{{ obj.id }}</td>
 		      <td>{{ obj.job_id }}</td>
 		      <td>{{ obj.amt }}</td>
-		      <td>
-		      	<a href="/teacher_desk/start_project/{{ obj.id }}/" class="btn btn-success btn-sm">Start Project</a>
-		      </td>
+		      
 		    </tr>
 
 		    {% endfor %}

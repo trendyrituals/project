@@ -1,0 +1,46 @@
+{% extends "superuser/desk.html" %}
+
+
+{% block section %}section-degree{% endblock %}
+
+
+{% block content %}
+
+<div class="alert bg-light text-center" style="margin-top: 20px;">
+
+	<h3>Username : {{ instance.user_name }}</h3>
+
+
+<div class="row">
+	<div class="col-md-6"><p>Degree : <a class="btn btn-sm btn-info" target="_blank" href="{{ instance.degree.url }}">View</a></p></div>
+	<div class="col-md-6"><p>Resume : <a class="btn btn-sm btn-info" target="_blank" href="{{ instance.resume.url }}">View</a></p></div>
+</div>
+
+
+
+<div>
+	<div class="text-center" style="margin-top: 20px;">
+		<p ><b>Skills : </b> {{ user.skills }}</p>
+	</div>
+
+
+	<div class="text-center" style="margin-top: 20px;">
+		<p><b>About : </b> {{ user.about }}</p>
+	</div>
+
+	<div class="text-center" style="margin-top: 20px;">
+		<p><b>Paypal Email :</b> {{ user.paypal_email }}</p>
+	</div>
+
+</div>
+
+
+<div>
+	<a class="btn btn-success" href="/superuser/accept_degree/{{ instance.id }}">Accept</a> | <a class="btn btn-danger" href="/superuser/reject_degree/{{ instance.id }}">Reject</a>
+</div>
+
+
+</div>
+
+
+{% endblock content %}

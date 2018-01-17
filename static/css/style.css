@@ -2,6 +2,25 @@ body, h1, h2, h3, h4, h5, h6 {
 	font-family: 'Merriweather', serif;
 }
 
+body{
+	font-size:14px;
+}
+
+#section-post-job .post-job,
+  #section-active-job .active-job,
+  #section-get-solution .get-solution,
+  #section-profile .profile,
+  #section-search-job .search-job,
+  #section-upload-solution .upload-solution,
+  #section-bid-manager .bid-manager { font-weight: bold; }
+
+
+
+#section-projects .projects,
+ #section-superuser .superuser,
+ #section-bids .bids,
+ #section-solution .solution,
+ #section-degree .degree { color : black; }
 
 /*jumbotron style here*/
 .jumbo-margin{

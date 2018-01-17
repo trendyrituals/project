@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet"> 
 
   </head>
-  <body>
+  <body id="{% block section %}section-generic{% endblock %}">
   
 
   <nav class="navbar navbar-expand-lg sticky-top navbar-light " style="background-color: #17A2B8;">
@@ -25,17 +25,17 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
+        <li class="nav-item post-job">
           <a class="nav-link" href="/student_desk/create_job/">Post Job</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item active-job">
           <a class="nav-link" href="/student_desk/active_job/">Active Job</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item get-solution">
           <a class="nav-link" href="/student_desk/get_solution/">Get Solution</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Profile</a>
+        <li class="nav-item profile">
+          <a class="nav-link" href="/student_desk/profile/">Profile</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/logout_view">Logout</a>

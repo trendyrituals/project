@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth import(authenticate, get_user_model, login, logout,)
+from django.contrib import messages
 from django.contrib.auth.models import User, Group
-
+from .models import Messages
 #form include here
-from .forms import UserLoginForm, UserRegisterForm, UserRegisterFormTeacher
+from .forms import UserLoginForm, UserRegisterForm, UserRegisterFormTeacher, ContactForm
 
 
 # Create your views here.
@@ -18,7 +19,18 @@ def index(request):
 
 #contact us  view here contact page.  
 def contact(request):
-	return render(request,"contact page here user can send a message to admin or query somthing about.")
+	title = "Contact Us"
+	form = ContactForm(request.POST or None)
+	if form.is_valid():
+		new_msg = form.save(commit=False)
+		new_msg.save()
+		txt = "Message successfully send."
+		messages.success (request, txt, extra_tags= 'text-success')
+	context = {
+		"form" : form,
+		"title" : title,
+	}
+	return render(request,"contact.html", context)
 
 
 
@@ -51,10 +63,13 @@ def sign_check(request):
 		group = user.groups.get()
 		gr = 'student'
 		tr = 'teacher'
+		susr = 'superuser'
 		if gr == group.name:
 			return redirect("/student_desk/")
 		if tr == group.name:
 			return redirect("/teacher_desk/")
+		if susr == group.name:
+			return redirect("/superuser/")
 		#return render(request,"test.html",{"user": group})
 
 

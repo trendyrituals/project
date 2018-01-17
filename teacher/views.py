@@ -4,13 +4,13 @@ from django.contrib.auth import(authenticate, get_user_model, login, logout,)
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User, Group
-from main.models import Job, Bid, Solution, Degree, Bid_count
+from main.models import Job, Bid, Solution, Degree, Bid_count, Teacher_profile
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
 
 
-from .forms import DegreeForm, BidForm, SolutionForm
+from .forms import DegreeForm, BidForm, SolutionForm, CreateProfileForm, UpdateProfileForm
 
 
 #######################################
@@ -38,6 +38,72 @@ def teacher_desk(request):
 				return render(request,"teacher/index.html", context)
 			else:
 				return redirect("/teacher_desk/degree/")
+
+
+
+
+#######################################
+#Profile view here
+#######################################
+def profile(request):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'teacher':
+			count = Teacher_profile.objects.filter(teacher_id = request.user.id)
+			if count.count() == 0:
+				return redirect("/teacher_desk/create_profile/")
+			else:
+				instance = get_object_or_404(Teacher_profile, teacher_id=request.user.id)
+				context ={
+				 "instance" : instance,
+				}
+				return render(request,"teacher/profile.html", context)
+
+
+#######################################
+#Create Profile view here
+#######################################
+def create_profile(request):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'teacher':
+			form = CreateProfileForm(request.POST or None, request.FILES or None)
+			if form.is_valid():
+				new_profile = form.save(commit=False)
+				new_profile.teacher_id = request.user.id
+				new_profile.save()
+				txt = "Profile successfully created."
+				messages.success (request, txt, extra_tags= 'text-success')
+				return redirect("/teacher_desk/profile/")
+			context = {
+			 "form": form,
+			}
+			return render(request,"teacher/create_profile.html", context)
+
+
+#######################################
+#update Profile view here
+#######################################
+def update_profile(request, id=None):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'teacher':
+			instance = get_object_or_404(Teacher_profile, teacher_id= id)
+			form = UpdateProfileForm(request.POST or None, request.FILES or None, instance=instance)
+			if form.is_valid():
+				update_profile = form.save(commit=False)
+				update_profile.teacher_id = request.user.id
+				update_profile.save()
+				txt = "Profile successfully updated."
+				messages.success (request, txt, extra_tags= 'text-success')
+				return redirect("/teacher_desk/profile/")
+			context = {
+			 "form": form,
+			}
+			return render(request,"teacher/update_profile.html", context)
 
 
 
@@ -69,6 +135,7 @@ def degree_upload(request):
 					
 				txt = "Degree and resume added successfully."
 				messages.success (request, txt, extra_tags= 'text-success')
+				return redirect("/teacher_desk/profile/")
 			context = {
 				"form" : form,
 				}
@@ -166,53 +233,59 @@ def bid(request,id=None,std=None):
 		user = User.objects.get(username=request.user)
 		group = user.groups.get()
 		if group.name == 'teacher':
+			object_list = Degree.objects.get(user_id=request.user.id)
+			permission = int(object_list.permission)
+			if permission == 1:
 
-			form = BidForm(request.POST or None)
-			
-			if form.is_valid():
-				bid_num = Bid_count.objects.get(user_id= request.user.id)
-				num = bid_num.bid_num
-				if int(num )>=1:
-					# updating Bid count
-					get_num = Bid_count.objects.get(user_id= request.user.id)
-					num = get_num.bid_num
-					up_num = int(num)-1
-					get_num.bid_num = str(up_num)
-					get_num.save() 
+				form = BidForm(request.POST or None)
+				
+				if form.is_valid():
+					bid_num = Bid_count.objects.get(user_id= request.user.id)
+					num = bid_num.bid_num
+					if int(num )>=1:
+						# updating Bid count
+						get_num = Bid_count.objects.get(user_id= request.user.id)
+						num = get_num.bid_num
+						up_num = int(num)-1
+						get_num.bid_num = str(up_num)
+						get_num.save() 
 
-					# saving bid form data 
-					new_bid = form.save(commit=False)
-					new_bid.teacher_id = request.user.id
-					new_bid.job_id = id
-					new_bid.std_id = std
-					add_tax = (float(new_bid.amt)*10)/100
-					total_add = float(new_bid.amt)+add_tax
-					new_bid.total_amt = total_add
-					new_bid.save()
+						# saving bid form data 
+						new_bid = form.save(commit=False)
+						new_bid.teacher_id = request.user.id
+						new_bid.job_id = id
+						new_bid.std_id = std
+						add_tax = (float(new_bid.amt)*10)/100
+						total_add = float(new_bid.amt)+add_tax
+						new_bid.total_amt = total_add
+						new_bid.save()
 
-					#send mail to teacher
-					get_student = User.objects.get(id=std)
-					std_email = get_student.email
-					mail_sub = 'subject here'
-					mail_message = 'Bid placed for job id : '+ id
-					sender = settings.EMAIL_HOST_USER
-					to_user = [std_email]
-					send_mail(
-					    mail_sub,
-					    mail_message,
-					    sender,
-					    to_user,
-					    fail_silently=False,
-					)
+						#send mail to teacher
+						get_student = User.objects.get(id=std)
+						std_email = get_student.email
+						mail_sub = 'subject here'
+						mail_message = 'Bid placed for job id : '+ id
+						sender = settings.EMAIL_HOST_USER
+						to_user = [std_email]
+						send_mail(
+						    mail_sub,
+						    mail_message,
+						    sender,
+						    to_user,
+						    fail_silently=False,
+						)
 
-					txt = "New bid added successfully."
-					messages.success (request, txt, extra_tags= 'text-success')
-				else:
-					return render(request,"teacher/no_bid.html")
-			context = {
-				"form" : form,
-				}
-			return render(request,"teacher/bid.html", context)
+						txt = "New bid added successfully."
+						messages.success (request, txt, extra_tags= 'text-success')
+					else:
+						return render(request,"teacher/no_bid.html")
+				context = {
+					"form" : form,
+					}
+				return render(request,"teacher/bid.html", context)
+			else:
+				return redirect("/teacher_desk/degree/")
+
 
 
 
@@ -274,7 +347,7 @@ def upload_solution(request,id=None):
 		user = User.objects.get(username=request.user)
 		group = user.groups.get()
 		if group.name == 'teacher':
-			obj = Bid.objects.filter(teacher_id=request.user.id, status=2).order_by('-id')
+			obj = Bid.objects.filter(teacher_id=request.user.id, status=1).order_by('-id')
 			context = {
 				"object":obj,
 			}
@@ -294,7 +367,7 @@ def upload_sol(request,id=None,job=None,std=None):
 				solution.std_id = std
 				solution.bid_id = id
 				solution.save()
-				#send mail to teacher
+				#send mail to student
 				get_student = User.objects.get(id=std)
 				std_email = get_student.email
 				mail_sub = 'subject here'
@@ -319,21 +392,6 @@ def upload_sol(request,id=None,job=None,std=None):
 
 
 
-
-#######################################
-#start project for new bid and change status to under process "2"
-#######################################
-def start_project(request,id=None):
-	if request.user.is_authenticated():
-		user = User.objects.get(username=request.user)
-		group = user.groups.get()
-		if group.name == 'teacher':
-			instance = get_object_or_404(Bid, id=id)
-			instance.status = 2
-			instance.save()
-			txt = "Successfully start a project now you can upload solution for the bid."
-			messages.success (request, txt, extra_tags= 'text-success')
-			return redirect("/teacher_desk/")
 
 
 

@@ -1,6 +1,6 @@
 from django import forms
 
-from main.models import Degree, Bid, Solution
+from main.models import Degree, Bid, Solution, Teacher_profile
 
 # New degree form
 class DegreeForm(forms.ModelForm):
@@ -28,4 +28,32 @@ class SolutionForm(forms.ModelForm):
 		model = Solution
 		fields = [
 			"file"
+		]
+
+
+
+#create profile form
+class CreateProfileForm(forms.ModelForm):
+	class Meta:
+		model = Teacher_profile
+		fields = [
+			"profile_picture",
+			"mobile",
+			"skills",
+			"about",
+			"paypal_email"
+		]
+
+
+
+#create profile form
+class UpdateProfileForm(forms.ModelForm):
+	class Meta:
+		model = Teacher_profile
+		fields = [
+			"profile_picture",
+			"mobile",
+			"skills",
+			"about",
+			"paypal_email"
 		]

@@ -2,13 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth import(authenticate, get_user_model, login, logout,)
 from django.contrib.auth.models import User, Group
-from main.models import Job, Bid, Solution
+from main.models import Job, Bid, Solution, Student_profile
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
 
 
-from .forms import JobForm, ReviewForm
+from .forms import JobForm, ReviewForm, CreateProfileForm, UpdateProfileForm
 
 
 
@@ -30,7 +30,75 @@ def student_desk(request):
 			"bids": new_bid,
 			}
 			return render(request,"student/index.html", context)
-		
+
+
+
+
+#######################################
+#Profile view here
+#######################################
+def profile(request):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'student':
+			count = Student_profile.objects.filter(std_id = request.user.id)
+			if count.count() == 0:
+				return redirect("/student_desk/create_profile/")
+			else:
+				instance = get_object_or_404(Student_profile, std_id=request.user.id)
+				context ={
+				 "instance" : instance,
+				}
+				return render(request,"student/profile.html", context)
+
+
+#######################################
+#Create Profile view here
+#######################################
+def create_profile(request):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'student':
+			form = CreateProfileForm(request.POST or None, request.FILES or None)
+			if form.is_valid():
+				new_profile = form.save(commit=False)
+				new_profile.std_id = request.user.id
+				new_profile.save()
+				txt = "Profile successfully created."
+				messages.success (request, txt, extra_tags= 'text-success')
+				return redirect("/student_desk/profile/")
+			context = {
+			 "form": form,
+			}
+			return render(request,"student/create_profile.html", context)
+
+
+#######################################
+#update Profile view here
+#######################################
+def update_profile(request, id=None):
+	if request.user.is_authenticated():
+		user = User.objects.get(username=request.user)
+		group = user.groups.get()
+		if group.name == 'student':
+			instance = get_object_or_404(Student_profile, std_id= id)
+			form = UpdateProfileForm(request.POST or None, request.FILES or None, instance=instance)
+			if form.is_valid():
+				update_profile = form.save(commit=False)
+				update_profile.std_id = request.user.id
+				update_profile.save()
+				txt = "Profile successfully updated."
+				messages.success (request, txt, extra_tags= 'text-success')
+				return redirect("/student_desk/profile/")
+			context = {
+			 "form": form,
+			}
+			return render(request,"student/update_profile.html", context)
+
+
+	
 
 
 
@@ -185,8 +253,12 @@ def download_solution(request,id):
 				job_id = bid.job_id
 				#submit review and close bid
 				bid.review = form.cleaned_data['review']
-				bid.status = 3
+				bid.status = 2
 				bid.save()
+				#close the solution for the review again
+				sol = Solution.objects.get(job_id = job_id)
+				sol.status = 1
+				sol.save()
 				#close project or job 
 				get_job = Job.objects.get(id=job_id)
 				get_job.status = 2
@@ -197,6 +269,7 @@ def download_solution(request,id):
 			"form" : form,
 			}
 			return render(request,"student/download_solution.html", context)
+
 
 
 

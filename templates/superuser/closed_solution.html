@@ -1,0 +1,62 @@
+{% extends "superuser/desk.html" %}
+
+
+{% block section %}section-solution{% endblock %}
+
+
+{% block content %}
+
+
+<div class="row text-center" style="margin-top: 20px;">
+
+	<div class="col-md-4">
+		<h3>{{ new_count }}</h3>
+		<p><a class="btn" href="/superuser/new_solution/">New Solutions</a></p>
+	</div>
+
+
+	<div class="col-md-4">
+		
+	</div>
+
+
+	<div class="col-md-4">
+		<h3>{{ old_count }}</h3>
+		<p><a class="btn" href="/superuser/closed_solution/">Reviewed Solution</a></p>
+	</div>
+
+
+</div><hr>
+
+<div style="margin-top: 40px;">
+	<h3>{{ title }}</h3>
+		<table class="table table-striped table-responsive">
+		  <thead>
+		    <tr>
+		      <th scope="col">Bid ID</th>
+		      <th scope="col">Job ID</th>
+		      <th scope="col">Solution</th>
+		      <th scope="col">Options</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    {% for obj in object %}
+
+		    <tr>
+		      <td>{{ obj.bid_id }}</td>
+		      <td>{{ obj.job_id }}</td>
+		      <td>{{ obj.file }}</td>
+		      
+		      <td>
+		      	<a href="/superuser/view_solution/{{ obj.id }}/" class="btn btn-primary btn-xs">view</a>
+		      </td>
+		    </tr>
+
+		    {% endfor %}
+		  </tbody>
+		</table>
+</div>
+
+
+
+{% endblock content %}

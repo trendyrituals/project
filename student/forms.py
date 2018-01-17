@@ -1,6 +1,6 @@
 from django import forms
 
-from main.models import Job
+from main.models import Job, Student_profile
 
 # New Job/post form for students
 class JobForm(forms.ModelForm):
@@ -29,3 +29,26 @@ _Choices = (
 class ReviewForm(forms.Form):
     review = forms.ChoiceField(label='Please choose one!', choices=_Choices, widget=forms.RadioSelect())
     
+
+
+#create profile form
+class CreateProfileForm(forms.ModelForm):
+	class Meta:
+		model = Student_profile
+		fields = [
+			"profile_picture",
+			"mobile",
+			"about",
+		]
+
+
+
+#create profile form
+class UpdateProfileForm(forms.ModelForm):
+	class Meta:
+		model = Student_profile
+		fields = [
+			"profile_picture",
+			"mobile",
+			"about",
+		]

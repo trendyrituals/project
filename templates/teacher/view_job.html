@@ -10,7 +10,7 @@
 	</div>
   
   <p>Subject : {{ instance.subject }}</p>
-  <p>Attachment : <a href="{{ instance.file.url }}">{{ instance.file }}</a></p>
+  <p>Attachment : <a target="_blank" href="{{ instance.file.url }}">{{ instance.file }}</a></p>
   <div class="row">
   	<div class="col-sm-4">Due Date : {{ instance.due_date }}</div>
   	<div class="col-sm-4">Price : {{ instance.amt }}$</div>

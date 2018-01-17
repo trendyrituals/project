@@ -33,7 +33,7 @@ class Degree(models.Model):
 	user_name = models.CharField(max_length=120)
 	resume = models.FileField(blank=False, null=True)
 	degree = models.FileField(blank=False, null=True)
-	permission = models.CharField(max_length=1)
+	permission = models.CharField(max_length=1,default=0)
 
 
 	def __unicode__(self):
@@ -103,3 +103,47 @@ class Solution(models.Model):
 
 	def __unicode__(self):
 		return self.job_id
+
+
+
+################################
+#student profile model here.
+################################
+class Student_profile(models.Model):
+	std_id = models.CharField(max_length=10)
+	mobile = models.CharField(max_length=15,blank=False)
+	about = models.TextField(blank=False)
+	profile_picture = models.FileField(blank=False, null=True)
+
+	def __unicode__(self):
+		return self.std_id
+
+
+
+################################
+#Teacher profile model here.
+################################
+class Teacher_profile(models.Model):
+	teacher_id = models.CharField(max_length=10)
+	mobile = models.CharField(max_length=15,blank=False)
+	skills = models.CharField(max_length=50,blank=False)
+	about = models.TextField(blank=False)
+	paypal_email = models.CharField(blank=False,max_length=50)
+	profile_picture = models.FileField(blank=False, null=True)
+
+	def __unicode__(self):
+		return self.teacher_id
+
+
+
+################################
+#Messages model here.
+################################
+class Messages(models.Model):
+	email = models.CharField(max_length=50,blank=False)
+	message = models.TextField(blank=False)
+	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+	status = models.CharField(max_length=1,default=0)
+
+	def __unicode__(self):
+		return self.email

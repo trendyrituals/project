@@ -1,7 +1,7 @@
 {% extends "teacher/desk.html" %}
 
 
-
+{% block section %}section-search-job{% endblock %}
 {% block content %}
 
 <div class="row" style="margin-top: 20px;">
@@ -37,7 +37,7 @@
 			  <p>{{ obj.description | truncatechars:300 }}</p>
 			  <div class="row">
 			  	<div class="col-sm-4">Due Date : {{ obj.due_date }}</div>
-			  	<div class="col-sm-4">Price : {{ obj.amt }}</div>
+			  	<div class="col-sm-4">Price : {{ obj.amt }} $</div>
 			  	<div class="col-sm-4">Publish On : {{ obj.timestamp }}</div>
 			  </div>
 			  

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Job, Degree, Bid, Solution, Bid_count
+from .models import Job, Degree, Bid, Solution, Bid_count, Student_profile, Teacher_profile, Messages
 
 
 ################################
@@ -64,6 +64,38 @@ class SolutionAdmin(admin.ModelAdmin):
 	class Meta:
 		model = Solution
 
+################################
+#student profile model here.
+################################
+class Student_profile_Admin(admin.ModelAdmin):
+	list_display = ["__unicode__","std_id"]
+	list_filter = ["std_id"]
+	search_fields = ["std_id"]
+	class Meta:
+		model = Student_profile
+
+
+################################
+#Teacher profile model here.
+################################
+class Teacher_profile_Admin(admin.ModelAdmin):
+	list_display = ["__unicode__","teacher_id"]
+	list_filter = ["teacher_id"]
+	search_fields = ["teacher_id"]
+	class Meta:
+		model = Teacher_profile
+
+
+################################
+#Messages model here.
+################################
+class Messages_Admin(admin.ModelAdmin):
+	list_display = ["__unicode__"]
+	list_filter = ["email"]
+	search_fields = ["email"]
+	class Meta:
+		model = Messages
+
 
 
 admin.site.register(Job, JobAdmin)
@@ -71,3 +103,6 @@ admin.site.register(Degree, DegreeAdmin)
 admin.site.register(Bid, BidAdmin)
 admin.site.register(Bid_count, Bid_countAdmin)
 admin.site.register(Solution, SolutionAdmin)
+admin.site.register(Student_profile, Student_profile_Admin)
+admin.site.register(Teacher_profile, Teacher_profile_Admin)
+admin.site.register(Messages, Messages_Admin)

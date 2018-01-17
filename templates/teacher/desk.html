@@ -16,7 +16,7 @@
 
 
   </head>
-  <body>
+  <body id="{% block section %}section-generic{% endblock %}">
   
 
   <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-info" >
@@ -30,19 +30,19 @@
       <ul class="navbar-nav mr-auto">
 
         <li class="nav-item">
-          <a class="nav-link" href="/teacher_desk/search_job/"><i class="fa fa-search" aria-hidden="true"></i> Search Job</a>
+          <a class="nav-link search-job" href="/teacher_desk/search_job/"><i class="fa fa-search" aria-hidden="true"></i> Search Job</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item bid-manager">
           <a class="nav-link" href="/teacher_desk/bid_manager/"><i class="fa fa-life-ring" aria-hidden="true"></i> Bids Manager</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item upload-solution">
           <a class="nav-link" href="/teacher_desk/upload_solution/"><i class="fa fa-upload" aria-hidden="true"></i> Upload Solution</a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa fa-user-secret" aria-hidden="true"></i> Profile</a>
+        <li class="nav-item profile">
+          <a class="nav-link" href="/teacher_desk/profile/"><i class="fa fa-user-secret" aria-hidden="true"></i> Profile</a>
         </li>
         
         <li class="nav-item">
