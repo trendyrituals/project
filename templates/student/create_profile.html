@@ -7,11 +7,11 @@
 <div class="row" style="margin-top: 20px;">
 	<div class="col-md-4"></div>
 
-	<div class="col-sm-4 alert bg-light">
-	<h3>Create Profile</h3>
+	<div class="col-sm-4">
+	<h4>Create Profile</h4>
 	  <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
 	    {{ form|crispy }}
-	    <input class="btn btn-success" type="submit" name="submit">
+	    <input class="btn btn-success" type="submit" name="submit" value="Submit">
 	  </form>
 	</div>
 

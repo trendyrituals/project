@@ -147,3 +147,16 @@ class Messages(models.Model):
 
 	def __unicode__(self):
 		return self.email
+
+
+################################
+#User Messages model here.
+################################
+class UserMessages(models.Model):
+	user_id = models.CharField(max_length=10)
+	message = models.TextField(blank=False)
+	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+	status = models.CharField(max_length=1,default=0)
+
+	def __unicode__(self):
+		return self.user_id

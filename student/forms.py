@@ -1,6 +1,6 @@
 from django import forms
 
-from main.models import Job, Student_profile
+from main.models import Job, Student_profile, UserMessages
 
 # New Job/post form for students
 class JobForm(forms.ModelForm):
@@ -51,4 +51,13 @@ class UpdateProfileForm(forms.ModelForm):
 			"profile_picture",
 			"mobile",
 			"about",
+		]
+
+
+#User Message to admin form
+class UserMessageForm(forms.ModelForm):
+	class Meta:
+		model = UserMessages
+		fields = [
+			'message',
 		]

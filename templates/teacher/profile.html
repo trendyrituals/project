@@ -5,36 +5,45 @@
 
 
 {% block content %}
-<div class="container bg-light" style="padding-top: 20px;padding-bottom: 20px;margin-top: 20px;">
+<div class="row" style="padding-top: 20px;padding-bottom: 20px;margin-top: 20px;">
+<div class="col-md-2"></div>
 
-	<div class="text-center row" style="margin-top: 20px;">
-		<div class="col-md-6">
-			<div class="text-center">
-			  <img src="{{ instance.profile_picture.url }}" alt="..." class="img-thumbnail">
+<div class="col-md-8">
+	
+		<div class="text-center row" style="margin-top: 20px;">
+			<div class="col-md-6">
+				<div class="text-center">
+					<img src="{{ instance.profile_picture.url }}" style="width: 250px;height: auto;" class="img-fluid rounded-circle">
+				  
+				</div>
 			</div>
+			<div class="col-md-6" style="padding-top: 40px;"><h3>{{ request.user }}</h3><p>{{ request.user.email }}<br>{{ instance.mobile }}</p></div>
 		</div>
-		<div class="col-md-6" style="padding-top: 40px;"><h3>{{ request.user }}</h3><p>{{ request.user.email }}<br>{{ instance.mobile }}</p></div>
-	</div>
-	<hr>
+		
 
-	<div class="text-center row">
-		<div class="col-md-6"><p><b>Rating : </b> 86 %</p></div>
-		<div class="col-md-6"><a class=" btn btn-info" href="/teacher_desk/update_profile/{{ instance.teacher_id }}">Update Profile</a></div>
-	</div>
+		<div class="text-center row" style="margin-top: 40px;">
+			<div class="col-md-6"><p><b>Rating : </b> 86 %</p></div>
+			<div class="col-md-6"><a class=" btn btn-info" href="/teacher_desk/update_profile/{{ instance.teacher_id }}">Update Profile</a></div>
+		</div>
 
 
-	<div class="text-center" style="margin-top: 20px;">
-		<p ><b>Skills : </b> {{ instance.skills }}</p>
-	</div>
+		<div class="text-center" style="margin-top: 20px;">
+			<p ><b>Skills : </b> {{ instance.skills }}</p>
+		</div>
 
 
-	<div class="text-center" style="margin-top: 20px;">
-		<p><b>About : </b> {{ instance.about }}</p>
-	</div>
+		<div class="text-center" style="margin-top: 20px;">
+			<p><b>About : </b> {{ instance.about }}</p>
+		</div>
 
-	<div class="text-center" style="margin-top: 20px;">
-		<p><b>Paypal Email :</b> {{ instance.paypal_email }}</p>
-	</div>
+		<div class="text-center" style="margin-top: 20px;">
+			<p><b>Paypal Email :</b> {{ instance.paypal_email }}</p>
+		</div>
+
+</div>
+
+<div class="col-md-2"></div>
+
 </div>
 
 

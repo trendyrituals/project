@@ -8,15 +8,20 @@
 	<div class="col-sm-4 offset-sm-6 ">
 		<form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
 		  <div class="form-group">
-		    <h1>{{ title }}</h1>
+		    <h4>{{ title }}</h4>
 		    {{ form|crispy }}
 			<input type="submit" class="btn btn-primary" value="{{ title }}"></input>
 		  </div>
 		</form>
+		<div class="row">
+			<div class="col-sm-6 text-left"><a href="/register_here/">Create Account</a></div>
+			<div class="col-sm-6 text-right"><a href="">Forgot Password</a></div>
+		</div>
+		
 	</div>
 
 	<div class="col-sm-4"></div>
 </div>
 
-
+<br><br><br><br><br>
 {% endblock content %}

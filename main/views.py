@@ -17,6 +17,7 @@ def index(request):
 
 
 
+
 #contact us  view here contact page.  
 def contact(request):
 	title = "Contact Us"

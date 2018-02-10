@@ -2,25 +2,63 @@ body, h1, h2, h3, h4, h5, h6 {
 	font-family: 'Merriweather', serif;
 }
 
+h1, h2, h3, h4, h5, h6{
+	color: #0d5378;
+}
+
 body{
 	font-size:14px;
 }
 
+.whitebtn{
+	background-color: white;
+	color: #0d5378;
+}
+
+
+.thumb{
+	margin-left: 45px;
+	margin-right: 45px;
+	background-color: #0d5378;
+	color: white;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	border: 0px;
+}
+
+.thumb h4, .about h4{
+	color: white;
+}
+
+.bord {
+	margin-left: 45px;
+	margin-right: 45px;
+}
+
+.about{
+	background-color: #0d5378;
+	color: white;
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+
+/*Teacher Section*/
 #section-post-job .post-job,
   #section-active-job .active-job,
   #section-get-solution .get-solution,
-  #section-profile .profile,
   #section-search-job .search-job,
+  #section-profile .profile,
   #section-upload-solution .upload-solution,
-  #section-bid-manager .bid-manager { font-weight: bold; }
+  #section-bid-manager .bid-manager { color: white; }
 
 
-
+/*Super User Section*/
 #section-projects .projects,
  #section-superuser .superuser,
  #section-bids .bids,
  #section-solution .solution,
- #section-degree .degree { color : black; }
+ #section-degree .degree { color : white; }
 
 /*jumbotron style here*/
 .jumbo-margin{

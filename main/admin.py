@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Job, Degree, Bid, Solution, Bid_count, Student_profile, Teacher_profile, Messages
+from .models import Job, Degree, Bid, Solution, Bid_count, Student_profile, Teacher_profile, Messages, UserMessages
 
 
 ################################
@@ -98,6 +98,17 @@ class Messages_Admin(admin.ModelAdmin):
 
 
 
+################################
+#UserMessages model here.
+################################
+class UserMessages_Admin(admin.ModelAdmin):
+	list_display = ["__unicode__", "message"]
+	list_filter = ["user_id"]
+	search_fields = ["user_id"]
+	class Meta:
+		model = UserMessages
+
+
 admin.site.register(Job, JobAdmin)
 admin.site.register(Degree, DegreeAdmin)
 admin.site.register(Bid, BidAdmin)
@@ -106,3 +117,4 @@ admin.site.register(Solution, SolutionAdmin)
 admin.site.register(Student_profile, Student_profile_Admin)
 admin.site.register(Teacher_profile, Teacher_profile_Admin)
 admin.site.register(Messages, Messages_Admin)
+admin.site.register(UserMessages, UserMessages_Admin)

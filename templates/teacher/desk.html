@@ -12,14 +12,14 @@
     <link href='{% static "css/style.css" %}' rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet"> 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"> 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" rel="stylesheet"> 
+     
 
 
   </head>
   <body id="{% block section %}section-generic{% endblock %}">
   
 
-  <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-info" >
+  <nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color: #0d5378;" >
   <div class="container">
     <a class="navbar-brand" href="/teacher_desk/">The Peacemaker</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,16 +33,16 @@
           <a class="nav-link search-job" href="/teacher_desk/search_job/"><i class="fa fa-search" aria-hidden="true"></i> Search Job</a>
         </li>
 
-        <li class="nav-item bid-manager">
-          <a class="nav-link" href="/teacher_desk/bid_manager/"><i class="fa fa-life-ring" aria-hidden="true"></i> Bids Manager</a>
+        <li class="nav-item">
+          <a class="nav-link bid-manager" href="/teacher_desk/bid_manager/"><i class="fa fa-life-ring" aria-hidden="true"></i> Bids Manager</a>
         </li>
 
-        <li class="nav-item upload-solution">
-          <a class="nav-link" href="/teacher_desk/upload_solution/"><i class="fa fa-upload" aria-hidden="true"></i> Upload Solution</a>
+        <li class="nav-item">
+          <a class="nav-link upload-solution" href="/teacher_desk/upload_solution/"><i class="fa fa-upload" aria-hidden="true"></i> Upload Solution</a>
         </li>
 
-        <li class="nav-item profile">
-          <a class="nav-link" href="/teacher_desk/profile/"><i class="fa fa-user-secret" aria-hidden="true"></i> Profile</a>
+        <li class="nav-item">
+          <a class="nav-link profile" href="/teacher_desk/profile/"><i class="fa fa-user-secret" aria-hidden="true"></i> Profile</a>
         </li>
         
         <li class="nav-item">
@@ -76,6 +76,16 @@
     {% endblock content %}
 
 
+  </div>
+
+  <div class="container" style="margin-top: 140px;">
+    <nav class="navbar navbar-light bg-light">
+      <span class="navbar-text"><a href="/student_desk/">The Peacemaker</a>&#169;2017</span>
+      <span class="navbar-text">
+        Write us on: admin@gmail.com
+      </span>
+    </nav>
+    
   </div>
 
     <!-- Optional JavaScript -->

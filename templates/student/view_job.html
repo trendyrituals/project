@@ -3,7 +3,7 @@
 {% block content %}
 
 <div style="margin-top: 40px;">
-<h1>{{ instance.job_title }}</h1>
+<h4>{{ instance.job_title }}</h4>
 <h5>Subject : {{ instance.subject }}</h5>
 <p>Due Date : {{ instance.due_date }}</p>
 <p>Willing To Pay : {{ instance.amt }} $</p>
@@ -11,7 +11,7 @@
 <p>{{ instance.description }}</p>
 <p>Publish On : {{ instance.timestamp }}</p>
 <div>
-	<a target="_blank" href="{{ instance.file.url }}">{{ instance.file }}</a>
+	<p>Attachment : <a target="_blank" href="{{ instance.file.url }}"><i class="fa fa-file-archive-o fa-3x" aria-hidden="true"></i></a></p>
 </div>
 	
 </div>

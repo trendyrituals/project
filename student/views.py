@@ -8,7 +8,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 
 
-from .forms import JobForm, ReviewForm, CreateProfileForm, UpdateProfileForm
+from .forms import JobForm, ReviewForm, CreateProfileForm, UpdateProfileForm, UserMessageForm
 
 
 
@@ -24,9 +24,9 @@ def student_desk(request):
 			user = User.objects.get(username=request.user)
 			group = user.groups.get()
 			new_bid = Bid.objects.filter(std_id = request.user.id, status=0)
+			form = UserMessageForm(request.POST or None)
 			context = {
-			"id": id,
-			"group": group,
+			"form": form,
 			"bids": new_bid,
 			}
 			return render(request,"student/index.html", context)
@@ -118,6 +118,7 @@ def createjob(request):
 				new_job.save()
 				txt = "New job added successfully."
 				messages.success (request, txt, extra_tags= 'text-success')
+				return redirect("/student_desk/create_job/")
 			context = {
 				"form" : form,
 				}

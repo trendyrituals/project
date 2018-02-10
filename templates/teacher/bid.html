@@ -5,12 +5,29 @@
 
 {% block content %}
 
+<div class="row">
+	<div class="col-md-4" style="margin-top: 20px;">
+		<h4>Bid Proposal</h4>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua.</p>
+	</div>
 
-<div class="col-sm-6">
-  <form method="POST" action="" enctype="">{% csrf_token %}
-    {{ form|crispy }}
-    <input class="btn btn-success" type="submit" name="submit">
-  </form>
+	<div class="col-md-4 alert">
+		<form method="POST" action="" enctype="">{% csrf_token %}
+			{{ form|crispy }}
+			<input class="btn btn-success" type="submit" name="submit" value="Submit">
+		</form>
+	</div>
+
+	<div class="col-md-4"></div>
+</div>
+
+<div class="col-sm-6 ">
+  
   
 </div>
 
