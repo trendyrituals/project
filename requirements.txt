@@ -1,6 +1,6 @@
 certifi==2017.7.27.1
 chardet==3.0.4
-Django==1.10.5
+Django==2.2.24
 django-crispy-forms==1.6.1
 django-markdown==0.8.4
 django-multiurl==1.1.0
